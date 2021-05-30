@@ -1,17 +1,25 @@
 package main
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
 )
 
 // API provides an implementation of the API API
-type API struct{}
+type API struct {
+	cfg *Config
+}
 
 // GetFeeds returns all available feeds
 func (api *API) GetFeeds(ctx echo.Context) error {
-	return ctx.String(http.StatusNotImplemented, "Not Implemented")
+	resp, err := json.Marshal(api.cfg.Feeds)
+	if err != nil {
+		return err
+	}
+
+	return ctx.String(http.StatusOK, string(resp))
 }
 
 // GetFeedsFeedID returns a feed by it's feedID
@@ -31,7 +39,12 @@ func (api *API) GetGroupGroupID(ctx echo.Context, groupID string) error {
 
 // GetGroups returns all groups
 func (api *API) GetGroups(ctx echo.Context) error {
-	return ctx.String(http.StatusNotImplemented, "Not Implemented")
+	resp, err := json.Marshal(api.cfg.Groups)
+	if err != nil {
+		return err
+	}
+
+	return ctx.String(http.StatusOK, string(resp))
 }
 
 // GetGroupsGroupIDFeeds returns a list of feeds associated with a given group ID

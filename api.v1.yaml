@@ -175,29 +175,48 @@ components:
           type: string
         imageURL:
           type: string
-        feed:
-          $ref: '#/components/schemas/Feed'
+        feedID:
+          type: string
+      required:
+        - title
+        - description
+        - content
+        - link
+        - imageURL
+        - feedID
     Feed:
       title: Feed
       type: object
       properties:
-        id:
+        ID:
           type: string
         name:
           type: string
-        group:
-          type: string
+        groupID:
+          type: array
+          items:
+            type: string
         description:
           type: string
+        URI:
+          type: string
+        type:
+          type: string
+      required:
+        - ID
+        - name
+        - groupID
+        - description
+        - URI
+        - type
     Group:
       title: Group
       type: object
       properties:
-        id:
+        ID:
           type: string
-        feeds:
-          type: array
-          items:
-            $ref: '#/components/schemas/Feed'
         name:
           type: string
+      required:
+        - ID
+        - name

@@ -1,6 +1,9 @@
 package main
 
-import "github.com/labstack/echo/v4"
+import (
+	"github.com/labstack/echo/v4"
+	"os"
+)
 
 var feeds = map[string]string{
 	"retrobattlestations": "https://www.reddit.com/r/retrobattlestations/.rss",
@@ -22,7 +25,15 @@ func main() {
 	// panic(err)
 	// }
 
-	api := API{}
+	homepath := os.Getenv("HOME")
+
+	cfgProvider := FileConfigProvider{}
+	cfg, err := cfgProvider.LoadConfig(homepath + "/.config/metacomposite/config.json")
+	if err != nil {
+		panic(err)
+	}
+
+	api := API{cfg: cfg}
 	e := echo.New()
 	RegisterHandlers(e, &api)
 	e.Logger.Fatal(e.Start(":3030"))
