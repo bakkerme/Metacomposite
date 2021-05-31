@@ -1,0 +1,22 @@
+{
+  "feeds": [
+    {
+      "ID": "retrobattlestations",
+      "name": "Retro Battlestations",
+      "description": "Retro Battlestations Reddit",
+      "groupID": ["reddit", "retrotech"],
+      "URI": "https://reddit.com/r/retrobattlestations.rss",
+      "type": "RSS"
+    }
+  ],
+  "groups": [
+    {
+      "ID": "reddit",
+      "Name": "Reddit"
+    },
+    {
+      "ID": "retrotech",
+      "Name": "Retro Tech"
+    }
+  ]
+}
