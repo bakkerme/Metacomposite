@@ -1,13 +1,10 @@
 package main
 
 import (
-	"github.com/labstack/echo/v4"
 	"os"
-)
 
-var feeds = map[string]string{
-	"retrobattlestations": "https://www.reddit.com/r/retrobattlestations/.rss",
-}
+	"github.com/labstack/echo/v4"
+)
 
 func main() {
 	// fp := gofeed.NewParser()

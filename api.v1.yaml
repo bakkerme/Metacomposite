@@ -1,12 +1,7 @@
-openapi: 3.1.0
+openapi: 3.0.0
 info:
   title: Metacomposite
   version: '1.0'
-  summary: Metacomposite API
-  contact:
-    name: Brandon Bakker
-    url: hyperfocus.systems
-    email: root@hyperfocus.systems
   description: Returns posts from multiple feeds
 servers:
   - url: 'http://localhost:3000'
@@ -58,7 +53,7 @@ paths:
                       $ref: '#/components/schemas/Post'
       operationId: get-feeds-feedID-posts
       description: Get posts associated with the feed
-  '/group/{groupID}':
+  '/groups/{groupID}':
     parameters:
       - schema:
           type: string
@@ -101,6 +96,10 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Post'
+                  errors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Error'
       operationId: get-group-groupID-posts
       description: Get posts associated with a group
   '/groups/{groupID}/feeds':
@@ -182,7 +181,6 @@ components:
         - description
         - content
         - link
-        - imageURL
         - feedID
     Feed:
       title: Feed
@@ -220,3 +218,15 @@ components:
       required:
         - ID
         - name
+    Error:
+      title: Error
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        relatedIDs:
+          type: array
+          items:
+            type: string
