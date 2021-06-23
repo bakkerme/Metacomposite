@@ -17,6 +17,9 @@ type ServerInterface interface {
 	// (GET /feeds)
 	GetFeeds(ctx echo.Context) error
 	// Your GET endpoint
+	// (GET /feeds/posts)
+	GetFeedsPosts(ctx echo.Context) error
+	// Your GET endpoint
 	// (GET /feeds/{feedID})
 	GetFeedsFeedID(ctx echo.Context, feedID string) error
 	// Your GET endpoint
@@ -47,6 +50,15 @@ func (w *ServerInterfaceWrapper) GetFeeds(ctx echo.Context) error {
 
 	// Invoke the callback with all the unmarshalled arguments
 	err = w.Handler.GetFeeds(ctx)
+	return err
+}
+
+// GetFeedsPosts converts echo context to params.
+func (w *ServerInterfaceWrapper) GetFeedsPosts(ctx echo.Context) error {
+	var err error
+
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetFeedsPosts(ctx)
 	return err
 }
 
@@ -168,6 +180,7 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 	}
 
 	router.GET(baseURL+"/feeds", wrapper.GetFeeds)
+	router.GET(baseURL+"/feeds/posts", wrapper.GetFeedsPosts)
 	router.GET(baseURL+"/feeds/:feedID", wrapper.GetFeedsFeedID)
 	router.GET(baseURL+"/feeds/:feedID/posts", wrapper.GetFeedsFeedIDPosts)
 	router.GET(baseURL+"/groups", wrapper.GetGroups)

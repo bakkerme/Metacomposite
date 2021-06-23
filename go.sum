@@ -70,6 +70,8 @@ github.com/valyala/fasttemplate v1.2.1 h1:TVEnxayobAdVkhQfrfes2IzOB6o+z4roRkPF52
 github.com/valyala/fasttemplate v1.2.1/go.mod h1:KHLXt3tVN2HBp8eijSv/kGJopbvo7S+qRAEEKiv+SiQ=
 gitlab.com/hyperfocus.systems/hyperfocus-utils v0.0.0-20210530044015-cd04ed67ba2f h1:7aBGrSB7c95+GTfCJhxYrImkdtQsWOyg5t02QWpguQo=
 gitlab.com/hyperfocus.systems/hyperfocus-utils v0.0.0-20210530044015-cd04ed67ba2f/go.mod h1:Ow+rGxeChNIrLswo+sGtdS66U/8iesVf0S2EQSVzNdU=
+gitlab.com/hyperfocus.systems/hyperfocus-utils v0.0.0-20210613230248-62321624cc89 h1:tPuNClPM/aCT6SfN2jLWkhU/pS5CEQaVLzGasS1CT18=
+gitlab.com/hyperfocus.systems/hyperfocus-utils v0.0.0-20210613230248-62321624cc89/go.mod h1:Ow+rGxeChNIrLswo+sGtdS66U/8iesVf0S2EQSVzNdU=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9/go.mod h1:LzIPMQfyMNhhGPhUkYOs5KpL4U8rLKemX1yGLhDgUto=
 golang.org/x/crypto v0.0.0-20200820211705-5c72a883971a/go.mod h1:LzIPMQfyMNhhGPhUkYOs5KpL4U8rLKemX1yGLhDgUto=

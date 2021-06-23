@@ -158,6 +158,29 @@ paths:
                   $ref: '#/components/schemas/Feed'
       operationId: get-feeds
       description: Get all feeds
+  /feeds/posts:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Post'
+                  errors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Error'
+              examples: {}
+      operationId: get-feeds-posts
+      description: Get all posts from all feeds
 components:
   schemas:
     Post:

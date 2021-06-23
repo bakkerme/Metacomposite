@@ -1,9 +1,5 @@
 package main
 
-import (
-	"github.com/mmcdole/gofeed"
-)
-
 func getFeedByID(feedID string, feeds *[]Feed) *Feed {
 	if feeds == nil {
 		return nil
@@ -49,9 +45,8 @@ func getFeedsForGroupID(groupID string, feeds *[]Feed) *[]Feed {
 	return &matchingFeeds
 }
 
-func getPostsForFeed(feed *Feed) (*[]Post, error) {
-	fp := gofeed.NewParser()
-	rssFeed, err := fp.ParseURL(feed.URI)
+func getPostsForFeed(rsl rssLoader, feed *Feed) (*[]Post, error) {
+	rssFeed, err := rsl.loadRSS(feed.URI)
 
 	if err != nil {
 		return nil, err
