@@ -67,8 +67,11 @@ func (api *API) GetFeedsPosts(ctx echo.Context) error {
 	for range feeds {
 		var out feedErrors
 		out = <-ch
-		posts = append(posts, *out.Posts...)
-		errors = append(errors, out.Err)
+		if out.Posts == nil {
+			errors = append(errors, out.Err)
+		} else {
+			posts = append(posts, *out.Posts...)
+		}
 	}
 
 	resp, err := json.Marshal(getFeedsPostsResponse{
