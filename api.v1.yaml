@@ -229,7 +229,6 @@ components:
         - groupID
         - description
         - URI
-        - type
     Group:
       title: Group
       type: object
@@ -253,3 +252,7 @@ components:
           type: array
           items:
             type: string
+      required:
+        - code
+        - message
+        - relatedIDs

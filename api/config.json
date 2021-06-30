@@ -5,8 +5,8 @@
       "name": "Retro Battlestations",
       "description": "Retro Battlestations Reddit",
       "groupID": ["reddit", "retrotech"],
-      "URI": "https://reddit.com/r/retrobattlestations.rss",
-      "type": "RSS"
+      "URI": "retrobattlestations",
+      "type": "reddit"
     }
   ],
   "groups": [

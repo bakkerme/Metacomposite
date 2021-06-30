@@ -1,15 +1,24 @@
-package main
+package api
 
 import (
 	"encoding/json"
 	"fmt"
+
 	utils "gitlab.com/hyperfocus.systems/hyperfocus-utils"
+	"hyperfocus.systems/metacomposite/v2/types"
 )
+
+// Credentials can contain a random set of credentials for various services
+type Credentials struct {
+	Type   string
+	Values map[string]string
+}
 
 // Config represents application-level configuration
 type Config struct {
-	Feeds  []Feed
-	Groups []Group
+	Feeds       []types.Feed
+	Groups      []types.Group
+	Credentials []Credentials
 }
 
 // FileConfigProvider provides configuration loading and parsing

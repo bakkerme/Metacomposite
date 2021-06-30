@@ -1,10 +1,12 @@
-package main
+package api
 
 import (
 	"reflect"
 	"testing"
 
 	hfutils "gitlab.com/hyperfocus.systems/hyperfocus-utils"
+	"hyperfocus.systems/metacomposite/v2/types"
+	typeMocks "hyperfocus.systems/metacomposite/v2/types/mocks"
 )
 
 var someFakeID = "fakeID"
@@ -13,7 +15,7 @@ func TestGetFeedByID(t *testing.T) {
 	feedTestData := *getTestFeedData()
 
 	t.Run("returns nil if no feeds are provided", func(t *testing.T) {
-		feed := getFeedByID(someFakeID, &[]Feed{})
+		feed := getFeedByID(someFakeID, &[]types.Feed{})
 		if feed != nil {
 			hfutils.MismatchError("getFeedByID", nil, feed)
 		}
@@ -47,7 +49,7 @@ func TestGetGroupByID(t *testing.T) {
 	groupTestData := *getTestGroupData()
 
 	t.Run("returns nil if no groups are provided", func(t *testing.T) {
-		group := getGroupByID(someFakeID, &[]Group{})
+		group := getGroupByID(someFakeID, &[]types.Group{})
 		if group != nil {
 			hfutils.MismatchError("getGroupByID", nil, group)
 		}
@@ -81,7 +83,7 @@ func TestGetFeedsForGroupID(t *testing.T) {
 	feedTestData := *getTestFeedData()
 
 	t.Run("returns nil if no feeds are provided", func(t *testing.T) {
-		feeds := getFeedsForGroupID(someFakeID, &[]Feed{})
+		feeds := getFeedsForGroupID(someFakeID, &[]types.Feed{})
 		if feeds != nil {
 			hfutils.MismatchError("getFeedsForGroupID", nil, feeds)
 		}
@@ -107,5 +109,60 @@ func TestGetFeedsForGroupID(t *testing.T) {
 			hfutils.MismatchError("getFeedsForGroupID", feedTestData, *feeds)
 		}
 	})
+}
 
+func TestGetPostsForFeed(t *testing.T) {
+	rssMock := new(typeMocks.Loader)
+	redditMock := new(typeMocks.Loader)
+
+	lds := Loaders{
+		RSS:    rssMock,
+		Reddit: redditMock,
+	}
+
+	expectedPosts := []types.Post{}
+
+	t.Run("RSS.LoadPosts is ran with mock feed", func(t *testing.T) {
+		feed := types.Feed{
+			Type: RSS,
+		}
+
+		rssMock.On("LoadPosts", &feed).Return(&expectedPosts, nil)
+
+		posts, err := getPostsForFeed(lds, &feed)
+		if err != nil {
+			hfutils.UnexpectedError("getPostsForFeed", err)
+		}
+
+		rssMock.AssertExpectations(t)
+
+		if posts != &expectedPosts {
+			hfutils.MismatchError("getPostsForFeed", expectedPosts, posts)
+		}
+	})
+
+	t.Run("Reddit.LoadPosts is ran with mock feed", func(t *testing.T) {
+		feed := types.Feed{
+			Type: Reddit,
+		}
+
+		redditMock.On("LoadPosts", &feed).Return(&expectedPosts, nil)
+
+		posts, err := getPostsForFeed(lds, &feed)
+		if err != nil {
+			hfutils.UnexpectedError("getPostsForFeed", err)
+		}
+
+		redditMock.AssertExpectations(t)
+
+		if posts != &expectedPosts {
+			hfutils.MismatchError("getPostsForFeed", expectedPosts, posts)
+		}
+	})
+
+	t.Run("Returns an error if feed type is invalid", func(t *testing.T) {
+		feed := types.Feed{}
+
+		posts, err := getPostsForFeed(lds, &feed)
+	})
 }
