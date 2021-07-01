@@ -20,9 +20,12 @@ func (rdl Load) LoadPosts(feed *types.Feed) (*[]types.Post, error) {
 		return nil, fmt.Errorf("Could not get posts for subreddit %s, error: %s", feed.URI, err)
 	}
 
-	fmt.Println(redditPosts)
+	posts := []types.Post{}
+	for _, post := range redditPosts {
+		posts = append(posts, redditPostToPost(post, feed.URI))
+	}
 
-	return nil, nil
+	return &posts, nil
 }
 
 func (rdl Load) loadSubredditPost(subreddit string) ([]*reddit.Post, error) {
@@ -31,8 +34,6 @@ func (rdl Load) loadSubredditPost(subreddit string) ([]*reddit.Post, error) {
 		App: reddit.App{
 			ID:     rdl.ID,
 			Secret: rdl.Secret,
-			// Username: "yourbotusername",
-			// Password: "yourbotspassword",
 		},
 	}
 	bot, _ := reddit.NewBot(cfg)
@@ -41,26 +42,16 @@ func (rdl Load) loadSubredditPost(subreddit string) ([]*reddit.Post, error) {
 		return nil, fmt.Errorf("Failed to fetch /r/%s, error: %s", subreddit, err)
 	}
 
-	// for _, post := range harvest.Posts[:5] {
-	// fmt.Printf("[%s] posted [%s]\n", post.Author, post.Title)
-	// }
-
 	return harvest.Posts, nil
 }
 
-// type mockRedditLoad struct {
-// mock.Mock
-// }
-
-// func (m *mockRedditLoad) loadPosts(feed *Feed) (*[]Post, error) {
-// args := m.Called(feed)
-// // return args.
-// }
-// func (m *mockRedditLoad) loadSubredditPost(subreddit string) (*[]reddit.Post, error) {
-// }
-
-// func (m *mockRedditLoad) DoSomething(number int) (bool, error) {
-
-// args := m.Called(number)
-// return args.Bool(0), args.Error(1)
-// }
+func redditPostToPost(post *reddit.Post, subreddit string) types.Post {
+	return types.Post{
+		Content:     post.SelfText,
+		Description: "",
+		FeedID:      subreddit,
+		ImageURL:    &post.Media.OEmbed.ProviderURL,
+		Link:        post.URL,
+		Title:       post.Title,
+	}
+}

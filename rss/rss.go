@@ -22,23 +22,7 @@ func (rsl Load) LoadPosts(feed *types.Feed) (*[]types.Post, error) {
 
 	posts := []types.Post{}
 	for _, item := range rssFeed.Items {
-		var imageURL *string
-		if item.Image != nil {
-			imageURL = &item.Image.URL
-		}
-		if item.Extensions["media"] != nil {
-			u := item.Extensions["media"]["thumbnail"][0].Attrs["url"]
-			imageURL = &u
-		}
-
-		posts = append(posts, types.Post{
-			Content:     item.Content,
-			Description: item.Description,
-			FeedID:      feed.ID,
-			ImageURL:    imageURL,
-			Link:        item.Link,
-			Title:       item.Title,
-		})
+		posts = append(posts, feedItemToPost(item, feed.ID))
 	}
 
 	return &posts, nil
@@ -76,5 +60,26 @@ func (rsl Load) LoadRSS(uri string) (*gofeed.Feed, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	return rss, nil
+}
+
+func feedItemToPost(item *gofeed.Item, feedID string) types.Post {
+	var imageURL *string
+	if item.Image != nil {
+		imageURL = &item.Image.URL
+	}
+	if item.Extensions["media"] != nil {
+		u := item.Extensions["media"]["thumbnail"][0].Attrs["url"]
+		imageURL = &u
+	}
+
+	return types.Post{
+		Content:     item.Content,
+		Description: item.Description,
+		FeedID:      feedID,
+		ImageURL:    imageURL,
+		Link:        item.Link,
+		Title:       item.Title,
+	}
 }
