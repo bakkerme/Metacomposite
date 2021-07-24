@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"os"
+	"runtime"
 
 	"github.com/labstack/echo/v4"
 	utils "gitlab.com/hyperfocus.systems/hyperfocus-utils"
@@ -11,10 +13,21 @@ import (
 )
 
 func main() {
-	homepath := os.Getenv("HOME")
+	configPath := ""
+
+	currOS := runtime.GOOS
+	if currOS == "windows" {
+		appdataPath := os.Getenv("appdata")
+		configPath = appdataPath + "/Metacomposite/config.json"
+	} else if currOS == "linux" {
+		homepath := os.Getenv("HOME")
+		configPath = homepath + "/.config/metacomposite/config.json"
+	} else {
+		panic(fmt.Sprintf("OS %s not yet supported", currOS))
+	}
 
 	cfgProvider := api.FileConfigProvider{}
-	cfg, err := cfgProvider.LoadConfig(homepath + "/.config/metacomposite/config.json")
+	cfg, err := cfgProvider.LoadConfig(configPath)
 	if err != nil {
 		panic(err)
 	}

@@ -111,6 +111,10 @@ func (api *API) GetFeedsFeedID(ctx echo.Context, feedID string) error {
 // GetFeedsFeedIDPosts returns all posts associated with a given feed ID
 func (api *API) GetFeedsFeedIDPosts(ctx echo.Context, feedID string) error {
 	feed := getFeedByID(feedID, &api.CFG.Feeds)
+	if feed == nil {
+		return ctx.String(http.StatusNotFound, "Could not find "+feedID)
+	}
+
 	posts, err := getPostsForFeed(api.Loaders, feed)
 	if err != nil {
 		return err

@@ -50,8 +50,16 @@ func redditPostToPost(post *reddit.Post, subreddit string) types.Post {
 		Content:     post.SelfText,
 		Description: "",
 		FeedID:      subreddit,
-		ImageURL:    &post.Media.OEmbed.ProviderURL,
+		ImageURL:    getImageURLFromPost(post),
 		Link:        post.URL,
 		Title:       post.Title,
+	}
+}
+
+func getImageURLFromPost(post *reddit.Post) *string {
+	if post.IsRedditMediaDomain {
+		return &post.URL
+	} else {
+		return nil
 	}
 }

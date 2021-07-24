@@ -163,6 +163,9 @@ func TestGetPostsForFeed(t *testing.T) {
 	t.Run("Returns an error if feed type is invalid", func(t *testing.T) {
 		feed := types.Feed{}
 
-		posts, err := getPostsForFeed(lds, &feed)
+		_, err := getPostsForFeed(lds, &feed)
+		if err == nil {
+			hfutils.ExpectedError("getPostsForFeed")
+		}
 	})
 }
