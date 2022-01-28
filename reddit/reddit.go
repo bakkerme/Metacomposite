@@ -3,8 +3,8 @@ package reddit
 import (
 	"fmt"
 
+	"github.com/bakkerme/metacomposite/v2/types"
 	"github.com/turnage/graw/reddit"
-	"hyperfocus.systems/metacomposite/v2/types"
 )
 
 //Load is an implementation of types.Loader, allowing for loading reddit posts

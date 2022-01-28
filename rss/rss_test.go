@@ -4,22 +4,22 @@ import (
 	"reflect"
 	"testing"
 
+	hfutils "github.com/bakkerme/hyperfocus-utils"
+	"github.com/bakkerme/metacomposite/v2/types"
 	"github.com/mmcdole/gofeed"
 	ext "github.com/mmcdole/gofeed/extensions"
-	hfutils "gitlab.com/hyperfocus.systems/hyperfocus-utils"
-	"hyperfocus.systems/metacomposite/v2/types"
 )
 
 func TestFeedItemToPost(t *testing.T) {
 	t.Run("Provides a Post with with an attached Image", func(t *testing.T) {
 		item := gofeed.Item{
 			Image: &gofeed.Image{
-				URL: "https://hyperfocus.systems/someimage.jpg",
+				URL: "https://github.com/bakkerme/someimage.jpg",
 			},
 			Extensions:  ext.Extensions{},
 			Content:     "TestFeed",
 			Description: "Test Description",
-			Link:        "https://hyperfocus.systems/apost",
+			Link:        "https://github.com/bakkerme/apost",
 			Title:       "A Post Title",
 		}
 
@@ -40,7 +40,7 @@ func TestFeedItemToPost(t *testing.T) {
 	})
 
 	t.Run("Provides a Post with with a media extension image", func(t *testing.T) {
-		imageURL := "https://hyperfocus.systems/someimage.jpg"
+		imageURL := "https://github.com/bakkerme/someimage.jpg"
 		item := gofeed.Item{
 			Extensions: ext.Extensions{
 				"media": map[string][]ext.Extension{
@@ -55,7 +55,7 @@ func TestFeedItemToPost(t *testing.T) {
 			},
 			Content:     "TestFeed",
 			Description: "Test Description",
-			Link:        "https://hyperfocus.systems/apost",
+			Link:        "https://github.com/bakkerme/apost",
 			Title:       "A Post Title",
 		}
 

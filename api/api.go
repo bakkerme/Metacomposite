@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/bakkerme/metacomposite/v2/types"
 	"github.com/labstack/echo/v4"
-	"hyperfocus.systems/metacomposite/v2/types"
 )
 
 // feedErrors is a struct used to hold Posts and any errors found
@@ -73,8 +73,7 @@ func (api *API) GetFeedsPosts(ctx echo.Context) error {
 	posts := []types.Post{}
 	errors := []types.Error{}
 	for range feeds {
-		var out feedErrors
-		out = <-ch
+		out := <-ch
 		if out.Posts == nil {
 			errors = append(errors, out.Err)
 		} else {
@@ -169,9 +168,9 @@ func (api *API) GetGroupsGroupIDFeeds(ctx echo.Context, groupID string) error {
 }
 
 type getGroupGroupIDPostsResponse struct {
-	group  types.Group
-	posts  []types.Post
-	errors []types.Error
+	Group  types.Group
+	Posts  []types.Post
+	Errors []types.Error
 }
 
 // GetGroupGroupIDPosts returns a list of posts associated with a given group
@@ -213,8 +212,7 @@ func (api *API) GetGroupGroupIDPosts(ctx echo.Context, groupID string) error {
 	posts := []types.Post{}
 	errors := []types.Error{}
 	for range *feeds {
-		var out feedErrors
-		out = <-ch
+		out := <-ch
 		posts = append(posts, *out.Posts...)
 		errors = append(errors, out.Err)
 	}

@@ -3,7 +3,7 @@ package api
 import (
 	"fmt"
 
-	"hyperfocus.systems/metacomposite/v2/types"
+	"github.com/bakkerme/metacomposite/v2/types"
 )
 
 func getFeedByID(feedID string, feeds *[]types.Feed) *types.Feed {

@@ -1,14 +1,14 @@
 package api
 
 import (
-	"hyperfocus.systems/metacomposite/v2/types"
+	"github.com/bakkerme/metacomposite/v2/types"
 )
 
 func getTestFeedData() *[]types.Feed {
 	return &[]types.Feed{
 		types.Feed{
 			ID:          "testfeed",
-			URI:         "https://hyperfocus.systems/testfeed",
+			URI:         "https://github.com/bakkerme/testfeed",
 			Description: "Test Description",
 			GroupID:     []string{"hyperfocus", "test"},
 			Name:        "Test Feed",
@@ -16,7 +16,7 @@ func getTestFeedData() *[]types.Feed {
 		},
 		types.Feed{
 			ID:          "testfeed2",
-			URI:         "https://hyperfocus.systems/testfeed2",
+			URI:         "https://github.com/bakkerme/testfeed2",
 			Description: "Test Description 2",
 			GroupID:     []string{"hyperfocus", "test", "2"},
 			Name:        "Test Feed 2",
@@ -24,7 +24,7 @@ func getTestFeedData() *[]types.Feed {
 		},
 		types.Feed{
 			ID:          "testfeed3",
-			URI:         "https://hyperfocus.systems/testfeed3",
+			URI:         "https://github.com/bakkerme/testfeed3",
 			Description: "Test Description 3",
 			GroupID:     []string{"hyperfocus", "test", "3"},
 			Name:        "Test Feed 3",

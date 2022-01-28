@@ -6,8 +6,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/bakkerme/metacomposite/v2/types"
 	"github.com/mmcdole/gofeed"
-	"hyperfocus.systems/metacomposite/v2/types"
 )
 
 // Load is an implementation of Loader, for loading RSS feed posts

@@ -7,6 +7,22 @@
       "groupID": ["reddit", "retrotech"],
       "URI": "retrobattlestations",
       "type": "reddit"
+    },
+    {
+      "ID": "MiSTerFPGA",
+      "name": "MiSTer FPGA",
+      "description": "MiSTer Subreddit",
+      "groupID": ["reddit", "retrotech"],
+      "URI": "MiSTerFPGA",
+      "type": "reddit"
+    },
+    {
+      "ID": "fpgagaming",
+      "name": "MiSTer FPGA",
+      "description": "FPGA Gaming",
+      "groupID": ["reddit", "retrotech"],
+      "URI": "fpgagaming",
+      "type": "reddit"
     }
   ],
   "groups": [

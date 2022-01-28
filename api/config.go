@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	utils "gitlab.com/hyperfocus.systems/hyperfocus-utils"
-	"hyperfocus.systems/metacomposite/v2/types"
+	utils "github.com/bakkerme/hyperfocus-utils"
+	"github.com/bakkerme/metacomposite/v2/types"
 )
 
 // Credentials can contain a random set of credentials for various services
@@ -32,12 +32,12 @@ func (cp FileConfigProvider) LoadConfig(path string) (*Config, error) {
 func (cp FileConfigProvider) loadConfig(path string, dr utils.DirReaderProvider) (*Config, error) {
 	file, err := dr.ReadFile(path)
 	if err != nil {
-		return nil, fmt.Errorf("Could not find Config file, please see readme and add a valid config to %s. Error %s", path, err)
+		return nil, fmt.Errorf("could not find Config file, please see readme and add a valid config to %s. Error %s", path, err)
 	}
 
 	var cfg Config
 	if err := json.Unmarshal([]byte(file), &cfg); err != nil {
-		return nil, fmt.Errorf("Can't unmarshal config file. Loading up %s, got error %s", path, err)
+		return nil, fmt.Errorf("can't unmarshal config file. Loading up %s, got error %s", path, err)
 	}
 
 	return &cfg, nil

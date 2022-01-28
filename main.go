@@ -5,25 +5,36 @@ import (
 	"os"
 	"runtime"
 
+	"github.com/bakkerme/metacomposite/v2/api"
+	"github.com/bakkerme/metacomposite/v2/env"
+	"github.com/bakkerme/metacomposite/v2/reddit"
+	"github.com/bakkerme/metacomposite/v2/rss"
+	"github.com/kelseyhightower/envconfig"
 	"github.com/labstack/echo/v4"
-	utils "gitlab.com/hyperfocus.systems/hyperfocus-utils"
-	"hyperfocus.systems/metacomposite/v2/api"
-	"hyperfocus.systems/metacomposite/v2/reddit"
-	"hyperfocus.systems/metacomposite/v2/rss"
 )
 
 func main() {
+	var spec env.Specification
+	err := envconfig.Process("mt", &spec)
+	if err != nil {
+		panic(err.Error())
+	}
+
 	configPath := ""
 
-	currOS := runtime.GOOS
-	if currOS == "windows" {
-		appdataPath := os.Getenv("appdata")
-		configPath = appdataPath + "/Metacomposite/config.json"
-	} else if currOS == "linux" {
-		homepath := os.Getenv("HOME")
-		configPath = homepath + "/.config/metacomposite/config.json"
-	} else {
-		panic(fmt.Sprintf("OS %s not yet supported", currOS))
+	if spec.Environment == env.Production {
+		currOS := runtime.GOOS
+		if currOS == "windows" {
+			appdataPath := os.Getenv("appdata")
+			configPath = appdataPath + "/Metacomposite/config.json"
+		} else if currOS == "linux" {
+			homepath := os.Getenv("HOME")
+			configPath = homepath + "/.config/metacomposite/config.json"
+		} else {
+			panic(fmt.Sprintf("OS %s not yet supported", currOS))
+		}
+	} else if spec.Environment == env.Local {
+		configPath = "./api/config.json"
 	}
 
 	cfgProvider := api.FileConfigProvider{}
@@ -32,23 +43,12 @@ func main() {
 		panic(err)
 	}
 
-	envReader := utils.EnvRead{}
-	redditID, found := envReader.LookupEnv("REDDIT_ID")
-	if !found {
-		panic("Cannot find REDDIT_ID envar")
-	}
-
-	redditSecret, found := envReader.LookupEnv("REDDIT_SECRET")
-	if !found {
-		panic("Cannot find REDDIT_SECRET envar")
-	}
-
 	cfg.Credentials = []api.Credentials{
-		api.Credentials{
+		{
 			Type: "reddit",
 			Values: map[string]string{
-				"ID":     redditID,
-				"Secret": redditSecret,
+				"ID":     spec.RedditId,
+				"Secret": spec.RedditSecret,
 			},
 		},
 	}
@@ -58,8 +58,8 @@ func main() {
 		Loaders: api.Loaders{
 			RSS: rss.Load{},
 			Reddit: reddit.Load{
-				ID:     redditID,
-				Secret: redditSecret,
+				ID:     spec.RedditId,
+				Secret: spec.RedditSecret,
 			},
 		},
 	}

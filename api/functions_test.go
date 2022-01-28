@@ -4,9 +4,9 @@ import (
 	"reflect"
 	"testing"
 
-	hfutils "gitlab.com/hyperfocus.systems/hyperfocus-utils"
-	"hyperfocus.systems/metacomposite/v2/types"
-	typeMocks "hyperfocus.systems/metacomposite/v2/types/mocks"
+	hfutils "github.com/bakkerme/hyperfocus-utils"
+	"github.com/bakkerme/metacomposite/v2/types"
+	typeMocks "github.com/bakkerme/metacomposite/v2/types/mocks"
 )
 
 var someFakeID = "fakeID"
