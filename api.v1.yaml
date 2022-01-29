@@ -181,12 +181,35 @@ paths:
               examples: {}
       operationId: get-feeds-posts
       description: Get all posts from all feeds
+  '/redditgallery/{galleryID}':
+    parameters:
+      - schema:
+          type: string
+        name: galleryID
+        in: path
+        required: true
+        description: ID of the Reddit Gallery
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            text/html:
+              schema:
+                type: object
+                properties: {}
+      operationId: get-redditgallery-galleryID
+      description: Proxies a reddit gallery for iFraming in Metacomposite
 components:
   schemas:
     Post:
       title: Post
       type: object
       properties:
+        ID:
+          type: string
         title:
           type: string
         description:
@@ -195,16 +218,29 @@ components:
           type: string
         link:
           type: string
-        imageURL:
+        permalink:
           type: string
+        imageURLs:
+          type: array
+          items:
+            type: string
         feedID:
           type: string
+        timestamp:
+          type: integer
+        isRedditGallery:
+          type: boolean
       required:
+        - ID
         - title
         - description
         - content
         - link
+        - permalink
+        - imageURLs
         - feedID
+        - timestamp
+        - isRedditGallery
     Feed:
       title: Feed
       type: object
@@ -229,6 +265,7 @@ components:
         - groupID
         - description
         - URI
+        - type
     Group:
       title: Group
       type: object

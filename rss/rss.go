@@ -65,20 +65,20 @@ func (rsl Load) LoadRSS(uri string) (*gofeed.Feed, error) {
 }
 
 func feedItemToPost(item *gofeed.Item, feedID string) types.Post {
-	var imageURL *string
+	imageURL := []string{}
 	if item.Image != nil {
-		imageURL = &item.Image.URL
+		imageURL = []string{item.Image.URL}
 	}
 	if item.Extensions["media"] != nil {
 		u := item.Extensions["media"]["thumbnail"][0].Attrs["url"]
-		imageURL = &u
+		imageURL = []string{u}
 	}
 
 	return types.Post{
 		Content:     item.Content,
 		Description: item.Description,
 		FeedID:      feedID,
-		ImageURL:    imageURL,
+		ImageURLs:   imageURL,
 		Link:        item.Link,
 		Title:       item.Title,
 	}

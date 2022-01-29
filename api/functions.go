@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/bakkerme/metacomposite/v2/types"
+	"github.com/labstack/echo/v4"
 )
 
 func getFeedByID(feedID string, feeds *[]types.Feed) *types.Feed {
@@ -34,12 +35,12 @@ func getGroupByID(groupID string, groups *[]types.Group) *types.Group {
 	return nil
 }
 
-func getFeedsForGroupID(groupID string, feeds *[]types.Feed) *[]types.Feed {
+func getFeedsForGroupID(groupID string, feeds *[]types.Feed) []types.Feed {
+	matchingFeeds := []types.Feed{}
 	if feeds == nil {
-		return nil
+		return matchingFeeds
 	}
 
-	matchingFeeds := []types.Feed{}
 	for _, feed := range *feeds {
 		for _, feedGroupID := range feed.GroupID {
 			if feedGroupID == groupID {
@@ -48,7 +49,7 @@ func getFeedsForGroupID(groupID string, feeds *[]types.Feed) *[]types.Feed {
 		}
 	}
 
-	return &matchingFeeds
+	return matchingFeeds
 }
 
 func getPostsForFeed(lds Loaders, feed *types.Feed) (*[]types.Post, error) {
@@ -60,4 +61,8 @@ func getPostsForFeed(lds Loaders, feed *types.Feed) (*[]types.Post, error) {
 	}
 
 	return nil, fmt.Errorf("%s is not implemented as a feed type", feed.Type)
+}
+
+func getHostFromEchoContext(ctx echo.Context) string {
+	return fmt.Sprintf("%s://%s", ctx.Request().URL.Scheme, ctx.Request().Host)
 }
