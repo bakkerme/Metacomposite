@@ -13,5 +13,5 @@ require (
 	github.com/rogpeppe/go-internal v1.8.1-0.20211023094830-115ce09fd6b4 // indirect
 	github.com/stretchr/testify v1.7.0
 	github.com/turnage/graw v0.0.0-20201204201853-a177df1b5c91
-	golang.org/x/sys v0.0.0-20211117180635-dee7805ff2e1 // indirect
+	golang.org/x/sys v0.1.0 // indirect
 )
